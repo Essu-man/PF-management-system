@@ -1,11 +1,8 @@
-from django.http import HttpResponse
+
 from django.shortcuts import render
 
 from .models import InventoryItem
 
-
-def home(request):
-    return HttpResponse("Welcome to the Poultry Farm Management System!")
 
 def inventory_dashboard(request):
     items = InventoryItem.objects.all()
@@ -14,3 +11,9 @@ def inventory_dashboard(request):
         'items': items,
         'low_stock_items': low_stock_items
     })
+
+def orders(request):
+    return render(request, 'orders.html')
+
+def settings(request):
+    return render(request, 'settings.html')
