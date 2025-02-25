@@ -1,0 +1,30 @@
+<!-- farm/templates/inventory_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poultry Farm Inventory</title>
+</head>
+<body>
+    <h1>Inventory Dashboard</h1>
+    <h2>Low Stock Alerts</h2>
+    <ul>
+    {% for item in low_stock_items %}
+        <li>{{ item.name }} ({{ item.quantity }} left)</li>
+    {% empty %}
+        <li>No low stock items.</li>
+    {% endfor %}
+    </ul>
+
+    <h2>All Inventory</h2>
+    <table border="1">
+        <tr><th>Name</th><th>Category</th><th>Quantity</th></tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

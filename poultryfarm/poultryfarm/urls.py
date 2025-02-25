@@ -4,5 +4,6 @@ from farm import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+    path('inventory/', views.inventory_dashboard, name='inventory_dashboard.html'),
+    path('', views.inventory_dashboard, name='home'),
 ]
