@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Health Records</h1>
+
+<div class="stats-container">
+    <div class="stat-card">
+        <div class="stat-value">98.2%</div>
+        <div class="stat-label">Flock Health Rate</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">5</div>
+        <div class="stat-label">Active Treatments</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">2</div>
+        <div class="stat-label">Pending Vaccinations</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">15</div>
+        <div class="stat-label">Days Since Last Incident</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Health Incidents</h2>
+        <button class="btn-primary">Record New Incident</button>
+    </div>
+    <div class="card-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Flock</th>
+                    <th>Issue Type</th>
+                    <th>Affected Birds</th>
+                    <th>Treatment</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>15-Feb-2025</td>
+                    <td>Broilers A1</td>
+                    <td>Respiratory Infection</td>
+                    <td>12</td>
+                    <td>Antibiotics (7 days)</td>
+                    <td><span class="badge warning">In Treatment</span></td>
+                    <td>
+                        <button class="btn-small">View</button>
+                        <button class="btn-small">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>10-Feb-2025</td>
+                    <td>Layers C1</td>
+                    <td>Egg Binding</td>
+                    <td>3</td>
+                    <td>Calcium Supplement</td>
+                    <td><span class="badge success">Resolved</span></td>
+                    <td>
+                        <button class="btn-small">View</button>
+                        <button class="btn-small">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>05-Feb-2025</td>
+                    <td>Broilers B2</td>
+                    <td>Dehydration</td>
+                    <td>8</td>
+                    <td>Electrolyte Solution</td>
+                    <td><span class="badge success">Resolved</span></td>
+                    <td>
+                        <button class="btn-small">View</button>
+                        <button class="btn-small">Update</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Vaccination Schedule</h2>
+                <button class="btn-primary">Add Vaccination</button>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vaccine</th>
+                            <th>Flock</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Newcastle Disease</td>
+                            <td>Broilers A1</td>
+                            <td>10-Mar-2025</td>
+                            <td><span class="badge info">Scheduled</span></td>
+                            <td>
+                                <button class="btn-small">Edit</button>
+                                <button class="btn-small">Complete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Infectious Bronchitis</td>
+                            <td>Layers C1</td>
+                            <td>05-Mar-2025</td>
+                            <td><span class="badge info">Scheduled</span></td>
+                            <td>
+                                <button class="btn-small">Edit</button>
+                                <button class="btn-small">Complete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Marek's Disease</td>
+                            <td>All Flocks</td>
+                            <td>15-Feb-2025</td>
+                            <td><span class="badge success">Completed</span></td>
+                            <td>
+                                <button class="btn-small">View</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Medication Inventory</h2>
+                <button class="btn-primary">Add Medication</button>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medication</th>
+                            <th>Type</th>
+                            <th>Stock</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Amoxicillin</td>
+                            <td>Antibiotic</td>
+                            <td>3 bottles</td>
+                            <td>Dec 2025</td>
+                            <td><span class="badge success">Adequate</span></td>
+                        </tr>
+                        <tr>
+                            <td>Vitamin B Complex</td>
+                            <td>Supplement</td>
+                            <td>2 bottles</td>
+                            <td>Sep 2025</td>
+                            <td><span class="badge warning">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td>Calcium Supplement</td>
+                            <td>Supplement</td>
+                            <td>1 bag</td>
+                            <td>Jul 2025</td>
+                            <td><span class="badge danger">Critical</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    h1 {
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+    .stats-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    .stat-card {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 20px;
+        width: calc(25% - 15px);
+        text-align: center;
+    }
+    .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 10px;
+    }
+    .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    .card {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #2e7d32;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .btn-primary {
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-small {
+        background-color: #ddd;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+    .success {
+        background-color: #a5d6a7;
+        color: #1b5e20;
+    }
+    .warning {
+        background-color: #fff59d;
+        color: #f57f17;
+    }
+    .danger {
+        background-color: #ef9a9a;
+        color: #b71c1c;
+    }
+    .info {
+        background-color: #bbdefb;
+        color: #0d47a1;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+    .col-6 {
+        width: calc(50% - 20px);
+        margin: 0 10px;
+    }
+    @media (max-width: 768px) {
+        .stat-card {
+            width: calc(50% - 10px);
+            margin-bottom: 10px;
+        }
+        .col-6 {
+            width: 100%;
+            margin: 0;
+        }
+    }
+</style>
+{% endblock %}

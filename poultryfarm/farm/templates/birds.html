@@ -1,0 +1,584 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    /* Birds Page Styles */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .add-button {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .secondary-button {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-color);
+        border: none;
+        border-radius: 4px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .add-button i, .secondary-button i {
+        margin-right: 8px;
+    }
+
+    /* Stats Cards */
+    .bird-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .stat-info h3 {
+        color: #aaaaaa;
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+
+    .stat-info h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .stat-icon {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-icon i {
+        font-size: 20px;
+        color: var(--accent-color);
+    }
+
+    /* Flock Section */
+    .birds-section {
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .view-all {
+        color: var(--accent-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .view-all i {
+        margin-left: 5px;
+    }
+
+    /* Flock Cards */
+    .flock-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .flock-card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 20px;
+        transition: transform 0.3s;
+    }
+
+    .flock-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .flock-card h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .flock-info {
+        margin-bottom: 15px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .info-label {
+        color: #aaaaaa;
+    }
+
+    .flock-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .flock-btn {
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        cursor: pointer;
+    }
+
+    /* Birds Table */
+    .birds-table-section {
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        width: 300px;
+    }
+
+    .search-bar i {
+        margin-right: 10px;
+        color: #aaaaaa;
+    }
+
+    .search-bar input {
+        background: none;
+        border: none;
+        color: var(--text-color);
+        outline: none;
+        width: 100%;
+    }
+
+    .filter-button {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .filter-button i:first-child {
+        margin-right: 8px;
+    }
+
+    .filter-button i:last-child {
+        margin-left: 8px;
+    }
+
+    /* Birds Table */
+    .birds-table {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    th, td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+        font-weight: 500;
+        color: #aaaaaa;
+    }
+
+    tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+
+    .badge-layer {
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #2196f3;
+    }
+
+    .badge-broiler {
+        background-color: rgba(156, 39, 176, 0.2);
+        color: #9c27b0;
+    }
+
+    .badge-healthy {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: var(--positive-color);
+    }
+
+    .badge-sick {
+        background-color: rgba(244, 67, 54, 0.2);
+        color: var(--negative-color);
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-btn {
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        cursor: pointer;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+        .bird-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .flock-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .bird-stats, .flock-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .page-header, .action-buttons {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .table-controls {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .search-bar {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Birds Management</h1>
+    <div class="action-buttons">
+        <button class="add-button">
+            <i class="fas fa-plus"></i>
+            <span>Add New Flock</span>
+        </button>
+        <button class="secondary-button">
+            <i class="fas fa-file-export"></i>
+            <span>Export Data</span>
+        </button>
+    </div>
+</div>
+
+<!-- Bird Stats -->
+<div class="bird-stats">
+    <div class="stat-card">
+        <div class="stat-card-content">
+            <div class="stat-info">
+                <h3>Total Birds</h3>
+                <h2>{{ total_birds|default:"1,234" }}</h2>
+                <p>Active in farm</p>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-feather"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-card-content">
+            <div class="stat-info">
+                <h3>Layers</h3>
+                <h2>{{ layers|default:"850" }}</h2>
+                <p>{{ layer_percent|default:"69" }}% of total birds</p>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-egg"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-card-content">
+            <div class="stat-info">
+                <h3>Broilers</h3>
+                <h2>{{ broilers|default:"384" }}</h2>
+                <p>{{ broiler_percent|default:"31" }}% of total birds</p>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-drumstick-bite"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-card-content">
+            <div class="stat-info">
+                <h3>Mortality Rate</h3>
+                <h2>{{ mortality_rate|default:"0.5" }}%</h2>
+                <p>Last 30 days</p>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Active Flocks -->
+<div class="birds-section">
+    <div class="section-header">
+        <h2>Active Flocks</h2>
+        <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="flock-cards">
+        {% for flock in flocks %}
+        <div class="flock-card">
+            <h3>{{ flock.name }}</h3>
+            <div class="flock-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span>{{ flock.type }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Birds:</span>
+                    <span>{{ flock.birds }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age:</span>
+                    <span>{{ flock.age }} weeks</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Health:</span>
+                    <span>{{ flock.health }}</span>
+                </div>
+            </div>
+            <div class="flock-actions">
+                <button class="flock-btn">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="flock-btn">
+                    <i class="fas fa-chart-line"></i>
+                </button>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Default flocks when no data is available -->
+        <div class="flock-card">
+            <h3>Layer Flock A</h3>
+            <div class="flock-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span>Layer</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Birds:</span>
+                    <span>450</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age:</span>
+                    <span>32 weeks</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Health:</span>
+                    <span>Healthy</span>
+                </div>
+            </div>
+            <div class="flock-actions">
+                <button class="flock-btn">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="flock-btn">
+                    <i class="fas fa-chart-line"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="flock-card">
+            <h3>Layer Flock B</h3>
+            <div class="flock-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span>Layer</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Birds:</span>
+                    <span>400</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age:</span>
+                    <span>25 weeks</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Health:</span>
+                    <span>Healthy</span>
+                </div>
+            </div>
+            <div class="flock-actions">
+                <button class="flock-btn">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="flock-btn">
+                    <i class="fas fa-chart-line"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="flock-card">
+            <h3>Broiler Flock C</h3>
+            <div class="flock-info">
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span>Broiler</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Birds:</span>
+                    <span>384</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age:</span>
+                    <span>4 weeks</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Health:</span>
+                    <span>Healthy</span>
+                </div>
+            </div>
+            <div class="flock-actions">
+                <button class="flock-btn">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="flock-btn">
+                    <i class="fas fa-chart-line"></i>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Birds Table -->
+<div class="birds-table-section">
+    <div class="section-header">
+        <h2>Bird Records</h2>
+        <div class="table-controls">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search birds...">
+            </div>
+            <div class="filter-button">
+                <i class="fas fa-filter"></i>
+                <span>Filter</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="birds-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Flock</th>
+                    <th>Type</th>
+                    <th>Age</th>
+                    <th>Weight</th>
+                    <th>Status</th>
+                    <th>Last Check</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bird in birds %}
+                <tr>
+                    <td>{{ bird.id }}</td>
+                    <td>{{ bird.flock }}</td>
+                    <td>
+                        <span class="badge badge-{{ bird.type|lower }}">{{ bird.type }}</span>
+                    </td>
+                    <td>{{ bird.age }} weeks</td>
+                    <td>{{ bird.weight }} kg</td>
+                    <td>
+                        <span class="badge badge-{{ bird.status|lower }}">{{ bird.status }}</span>
+                    </td>
+                    <td>{{ bird.last_check|date:"Y-m-d" }}</td>
+                    <td class="actions">
+                        <button class

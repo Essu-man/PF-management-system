@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Feed Management</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Feed Inventory</h2>
+        <button class="btn-primary">Add New Feed</button>
+    </div>
+    <div class="card-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feed Type</th>
+                    <th>Stock (kg)</th>
+                    <th>Last Refill Date</th>
+                    <th>Cost per kg</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Starter Feed</td>
+                    <td>450</td>
+                    <td>21-Feb-2025</td>
+                    <td>$0.35</td>
+                    <td><span class="badge success">Adequate</span></td>
+                    <td>
+                        <button class="btn-small">Edit</button>
+                        <button class="btn-small">Use</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Grower Feed</td>
+                    <td>320</td>
+                    <td>15-Feb-2025</td>
+                    <td>$0.42</td>
+                    <td><span class="badge success">Adequate</span></td>
+                    <td>
+                        <button class="btn-small">Edit</button>
+                        <button class="btn-small">Use</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Layer Feed</td>
+                    <td>120</td>
+                    <td>05-Feb-2025</td>
+                    <td>$0.45</td>
+                    <td><span class="badge warning">Low</span></td>
+                    <td>
+                        <button class="btn-small">Edit</button>
+                        <button class="btn-small">Use</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Protein Supplement</td>
+                    <td>25</td>
+                    <td>10-Jan-2025</td>
+                    <td>$1.20</td>
+                    <td><span class="badge danger">Critical</span></td>
+                    <td>
+                        <button class="btn-small">Edit</button>
+                        <button class="btn-small">Use</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Feeding Schedule</h2>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Flock</th>
+                            <th>Feed Type</th>
+                            <th>Quantity (kg/day)</th>
+                            <th>Feeding Times</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Broilers A1</td>
+                            <td>Starter Feed</td>
+                            <td>25</td>
+                            <td>7:00 AM, 3:00 PM</td>
+                            <td><button class="btn-small">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>Broilers B2</td>
+                            <td>Grower Feed</td>
+                            <td>32</td>
+                            <td>7:30 AM, 3:30 PM</td>
+                            <td><button class="btn-small">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>Layers C1</td>
+                            <td>Layer Feed</td>
+                            <td>18</td>
+                            <td>8:00 AM, 4:00 PM</td>
+                            <td><button class="btn-small">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Feed Consumption Metrics</h2>
+            </div>
+            <div class="card-body">
+                <div class="metric-box">
+                    <p>Daily consumption: <strong>75 kg</strong></p>
+                    <p>Weekly consumption: <strong>525 kg</strong></p>
+                    <p>Monthly consumption: <strong>2,250 kg</strong></p>
+                    <p>Feed conversion ratio: <strong>1.8</strong></p>
+                </div>
+                <div class="alert info">
+                    <p><strong>Note:</strong> The feed conversion ratio has improved by 0.2 points compared to last month.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #2e7d32;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .btn-primary {
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-small {
+        background-color: #ddd;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+    .success {
+        background-color: #a5d6a7;
+        color: #1b5e20;
+    }
+    .warning {
+        background-color: #fff59d;
+        color: #f57f17;
+    }
+    .danger {
+        background-color: #ef9a9a;
+        color: #b71c1c;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+    .col-6 {
+        width: calc(50% - 20px);
+        margin: 0 10px;
+    }
+    .metric-box {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    .metric-box p {
+        margin: 10px 0;
+    }
+    .alert {
+        padding: 10px 15px;
+        border-radius: 4px;
+    }
+    .info {
+        background-color: #e3f2fd;
+        color: #0d47a1;
+    }
+    @media (max-width: 768px) {
+        .col-6 {
+            width: 100%;
+            margin: 0;
+        }
+    }
+</style>
+{% endblock %}

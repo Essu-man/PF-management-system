@@ -4,16 +4,16 @@ from django.shortcuts import render
 from .models import InventoryItem
 
 
-def inventory_dashboard(request):
+def dashboard(request):
     items = InventoryItem.objects.all()
     low_stock_items = [item for item in items if item.is_low_stock()]
-    return render(request, 'inventory_dashboard.html', {
+    return render(request, 'dashboard.html', {
         'items': items,
         'low_stock_items': low_stock_items
     })
 
-def orders(request):
-    return render(request, 'orders.html')
+def Inventory(request):
+    return render(request, 'Inventory.html')
 
-def settings(request):
-    return render(request, 'settings.html')
+def birds(request):
+    return render(request, 'birds.html')

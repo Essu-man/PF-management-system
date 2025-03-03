@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Reports & Analytics</h1>
+
+<div class="filters-container">
+    <div class="filter-group">
+        <label for="report-type">Report Type:</label>
+        <select id="report-type" class="form-control">
+            <option value="production">Production Report</option>
+            <option value="financial">Financial Report</option>
+            <option value="inventory">Inventory Report</option>
+            <option value="health">Health Report</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label for="date-range">Date Range:</label>
+        <select id="date-range" class="form-control">
+            <option value="week">Last Week</option>
+            <option value="month" selected>Last Month</option>
+            <option value="quarter">Last Quarter</option>
+            <option value="year">Last Year</option>
+            <option value="custom">Custom Range</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label for="flock">Flock:</label>
+        <select id="flock" class="form-control">
+            <option value="all">All Flocks</option>
+            <option value="broilers-a1">Broilers A1</option>
+            <option value="broilers-b2">Broilers B2</option>
+            <option value="layers-c1">Layers C1</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <button class="btn-primary">Generate Report</button>
+        <button class="btn-secondary">Export PDF</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Production Overview</h2>
+            </div>
+            <div class="card-body chart-container">
+                <div class="placeholder-chart">
+                    <!-- This would be replaced with actual chart -->
+                    <div class="chart-placeholder">
+                        <div class="bar" style="height: 70%;"></div>
+                        <div class="bar" style="height: 85%;"></div>
+                        <div class="bar" style="height: 65%;"></div>
+                        <div class="bar" style="height: 90%;"></div>
+                        <div class="bar" style="height: 75%;"></div>
+                        <div class="bar" style="height: 80%;"></div>
+                        <div class="bar" style="height: 95%;"></div>
+                    </div>
+                    <div class="chart-label">Daily Egg Production (Last Week)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Revenue vs. Expenses</h2>
+            </div>
+            <div class="card-body chart-container">
+                <div class="placeholder-chart">
+                    <!-- This would be replaced with actual chart -->
+                    <div class="chart-placeholder pie-chart">
+                        <div class="pie-segment" style="--percentage: 65%; --color: #4caf50;"></div>
+                        <div class="pie-segment" style="--percentage: 35%; --color: #f44336;"></div>
+                    </div>
+                    <div class="chart-label">Profit Margin: 35%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Monthly Summary</h2>
+        <div class="date-display">February 2025</div>
+    </div>
+    <div class="card-body">
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="summary-label">Total Eggs Collected</div>
+                <div class="summary-value">24,568</div>
+                <div class="summary-trend positive">+5.2% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Broiler Weight Gain</div>
+                <div class="summary-value">1,254 kg</div>
+                <div class="summary-trend positive">+3.7% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Feed Consumption</div>
+                <div class="summary-value">2,250 kg</div>
+                <div class="summary-trend negative">+2.1% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Mortality Rate</div>
+                <div class="summary-value">1.2%</div>
+                <div class="summary-trend positive">-0.3% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Revenue</div>
+                <div class="summary-value">$12,450</div>
+                <div class="summary-trend positive">+7.8% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Expenses</div>
+                <div class="summary-value">$8,125</div>
+                <div class="summary-trend negative">+2.3% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Net Profit</div>
+                <div class="summary-value">$4,325</div>
+                <div class="summary-trend positive">+20.5% from last month</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Feed Conversion Ratio</div>
+                <div class="summary-value">1.8</div>
+                <div class="summary-trend positive">-0.1 from last month</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Recent Reports</h2>
+        <button class="btn-primary">View All Reports</button>
+    </div>
+    <div class="card-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Report Name</th>
+                    <th>Date Generated</th>
+                    <th>Type</th>
+                    <th>Generated By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>February 2025 Monthly Overview</td>
+                    <td>28-Feb-2025</td>
+                    <td>Production</td>
+                    <td>System</td>
+                    <td>
+                        <button class="btn-small">View</button>
+                        <button class="btn-small">Download</button>
+                        <button class="btn-small">Print</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Q1 2025 Financial Analysis</td>
+                    <td>25-Feb-2025</td>
+                    <td>Financial</td>
+                    <td>Admin</td>
+                    <td>
+                        <button class="btn-small">View</button>
+                        <button class="btn-small">Download</button>
+                        <button class="btn-small">Print</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Layers C1 Health Report</td>
+                    <td>20-Feb-2025</td>
+                    <td>Health</td>
+                    <td>Veterinarian</td>
+                    <td>
+                        <button class="btn-small">View</button>
+                        <button class="btn-small">Download</button>
+                        <button class="btn-small">Print</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    h1 {
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+    .filters-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 15px;
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-control {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        min-width: 150px;
+    }
+    label {
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .card {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #2e7d32;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .btn-primary {
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-secondary {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-small {
+        background-color: #ddd;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+    .col-6 {
+        width: calc(50% - 20px);
+        margin: 0 10px;
+    }
+    .chart-container {
+        height: 300px;
+    }
+    .placeholder-chart {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .chart-placeholder {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        width: 100%;
+        height: 80%;
+        border-bottom: 2px solid #ddd;
+    }
+    .bar {
+        width: 30px;
+        background-color: #4caf50;
+        margin: 0 5px;
+    }
+    .chart-label {
+        margin-top: 10px;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    .pie-chart {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        overflow: hidden;
+    }
+    .pie-segment {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: rotate(0deg);
+        transform-origin: center;
+        background-color: var(--color);
+        clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
+    }
+    .pie-segment:nth-child(1) {
+        transform: rotate(calc(3.6deg * var(--percentage)));
+    }
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    .summary-item {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .summary-label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    .summary-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #
