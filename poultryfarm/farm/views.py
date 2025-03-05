@@ -17,3 +17,12 @@ def Inventory(request):
 
 def birds(request):
     return render(request, 'birds.html')
+
+def feed(request):
+    return render(request, 'feed.html')
+
+def health(request):
+    return render(request, 'health.html')
+
+def reports(request):
+    return render(request, 'reports.html')

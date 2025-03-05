@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %
 
 {% block extra_css %}
 <style>
@@ -581,4 +581,17 @@
                     </td>
                     <td>{{ bird.last_check|date:"Y-m-d" }}</td>
                     <td class="actions">
-                        <button class
+                        <button class="action-btn">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
