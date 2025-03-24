@@ -322,38 +322,64 @@
 
     <!-- Inventory Categories -->
     <div class="inventory-categories">
-        <div class="category-card">
-            <div class="category-icon">
-                <i class="fas fa-egg"></i>
+        <div class="card">
+            <div class="card-content">
+                <div class="card-info">
+                    <h3>Egg</h3>
+                    <h2>{{ egg_count|default:"1,250" }} in stock</h2>
+                    <p class="trend positive">
+                        <i class="fas fa-arrow-up"></i> {{ egg_growth|default:"5.2" }}% vs last period
+                    </p>
+                </div>
             </div>
-            <h3>Eggs</h3>
-            <p>{{ egg_count|default:"1,250" }} in stock</p>
         </div>
 
-        <div class="category-card">
-            <div class="category-icon">
-                <i class="fas fa-drumstick-bite"></i>
+        <div class="inventory-categories">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Feed</h3>
+                        <p>{{ feed_count|default:"5,000" }} kg in stock</p>
+                    </div>
+                        <p class="trend positive">
+                            <i class="fas fa-"></i> {{ egg_growth|default:"5.2" }}% vs last period
+                            <i class="fas fa-drumstick-bite"></i>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <h3>Feed</h3>
-            <p>{{ feed_count|default:"5,000" }} kg in stock</p>
-        </div>
+            </div>
 
-        <div class="category-card">
-            <div class="category-icon">
-                <i class="fas fa-prescription-bottle-alt"></i>
-            </div>
-            <h3>Medications</h3>
-            <p>{{ medication_count|default:"18" }} items in stock</p>
-        </div>
 
-        <div class="category-card">
-            <div class="category-icon">
-                <i class="fas fa-tools"></i>
-            </div>
-            <h3>Equipment</h3>
-            <p>{{ equipment_count|default:"35" }} items in stock</p>
-        </div>
-    </div>
+                <div class="inventory-categories">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-info">
+                                <h3>Medications</h3>
+                                <p>{{ medication_count|default:"18" }} items in stock</p>
+                            </div>
+                            </div>
+                                <p class="trend positive">
+                                    <i class="fas fa-prescription-bottle-alt"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="inventory-categories">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <h3>Equipment</h3>
+                                    <p>{{ equipment_count|default:"35" }} items in stock</p>
+                                </div>
+                            </div>
+                            <p class = "trend positive">
+                                <i class="fas fa-tools"></i>
+                            </p>
+                        </div>
+                    </div>
 
     <!-- Inventory List -->
     <div class="inventory-section">
