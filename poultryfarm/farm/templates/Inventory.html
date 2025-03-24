@@ -1,32 +1,58 @@
 {% extends 'base.html' %}
 
+{% block title %}Inventory Management{% endblock %}
+
 {% block extra_css %}
 <style>
-    /* Inventory Page Styles */
+    :root {
+        --accent-color: #4361ee;
+        --text-color: #333333;
+        --card-bg: #ffffff;
+        --border-color: #e0e0e0;
+        --positive-color: #4caf50;
+        --negative-color: #f44336;
+        --bg-color: #f5f7fa;
+    }
+
+    /* Header Section */
     .page-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .page-header h1 {
+        color: #333;
+        font-size: 24px;
     }
 
     .add-button {
         background-color: var(--accent-color);
         color: white;
         border: none;
-        border-radius: 4px;
-        padding: 10px 15px;
+        border-radius: 6px;
+        padding: 12px 18px;
         display: flex;
         align-items: center;
         cursor: pointer;
         font-weight: 500;
+        transition: background-color 0.2s;
+    }
+
+    .add-button:hover {
+        background-color: #3451c6;
     }
 
     .add-button i {
-        margin-right: 8px;
+        margin-right: 10px;
     }
 
-    /* Inventory Card Styles */
+    /* Inventory Categories */
     .inventory-categories {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -36,69 +62,78 @@
 
     .category-card {
         background-color: var(--card-bg);
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     }
 
     .category-icon {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(67, 97, 238, 0.1);
         border-radius: 50%;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
     .category-icon i {
-        font-size: 20px;
+        font-size: 24px;
         color: var(--accent-color);
     }
 
     .category-card h3 {
-        font-size: 18px;
-        margin-bottom: 5px;
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: #333;
     }
 
     .category-card p {
-        color: #aaaaaa;
-        font-size: 14px;
+        color: #777;
+        font-size: 16px;
     }
 
     /* Inventory Table Section */
     .inventory-section {
         background-color: var(--card-bg);
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
     }
 
     .inventory-section h2 {
-        margin-bottom: 20px;
-        font-size: 18px;
-        font-weight: 500;
+        margin-bottom: 25px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
     }
 
     .inventory-controls {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     .search-bar {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        padding: 10px 15px;
+        background-color: #f5f7fa;
+        border-radius: 6px;
+        padding: 12px 15px;
         display: flex;
         align-items: center;
-        width: 300px;
+        width: 350px;
+        border: 1px solid #e0e0e0;
     }
 
     .search-bar i {
         margin-right: 10px;
-        color: #aaaaaa;
+        color: #777;
     }
 
     .search-bar input {
@@ -107,33 +142,48 @@
         color: var(--text-color);
         outline: none;
         width: 100%;
+        font-size: 15px;
     }
 
     .filter-controls {
         display: flex;
-        gap: 10px;
+        gap: 15px;
     }
 
     .filter-button {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        padding: 10px 15px;
+        background-color: #f5f7fa;
+        border-radius: 6px;
+        padding: 12px 18px;
         display: flex;
         align-items: center;
         cursor: pointer;
+        border: 1px solid #e0e0e0;
+        transition: background-color 0.2s;
+    }
+
+    .filter-button:hover {
+        background-color: #e9ecf2;
     }
 
     .filter-button i:first-child {
-        margin-right: 8px;
+        margin-right: 10px;
+        color: #777;
     }
 
     .filter-button i:last-child {
-        margin-left: 8px;
+        margin-left: 10px;
+        color: #777;
+    }
+
+    .filter-button span {
+        color: #555;
     }
 
     /* Inventory Table */
     .inventory-table {
         overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
     }
 
     table {
@@ -142,49 +192,61 @@
     }
 
     thead {
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: #f5f7fa;
     }
 
     th, td {
-        padding: 12px 16px;
+        padding: 15px 20px;
         text-align: left;
         border-bottom: 1px solid var(--border-color);
     }
 
     th {
-        font-weight: 500;
-        color: #aaaaaa;
+        font-weight: 600;
+        color: #555;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    td {
+        font-size: 15px;
     }
 
     tbody tr:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(67, 97, 238, 0.03);
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
     }
 
     .status-badge {
         display: inline-block;
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-size: 12px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
     }
 
     .status-ok {
-        background-color: rgba(76, 175, 80, 0.2);
+        background-color: rgba(76, 175, 80, 0.15);
         color: var(--positive-color);
     }
 
     .status-low {
-        background-color: rgba(255, 152, 0, 0.2);
+        background-color: rgba(255, 152, 0, 0.15);
         color: #ff9800;
     }
 
     .status-critical {
-        background-color: rgba(244, 67, 54, 0.2);
+        background-color: rgba(244, 67, 54, 0.15);
         color: var(--negative-color);
     }
 
     .actions {
         display: flex;
-        gap: 10px;
+        gap: 15px;
     }
 
     .action-btn {
@@ -192,6 +254,21 @@
         border: none;
         color: var(--accent-color);
         cursor: pointer;
+        font-size: 16px;
+        transition: color 0.2s;
+    }
+
+    .action-btn:hover {
+        color: #3451c6;
+    }
+
+    /* Footer */
+    .footer-note {
+        margin-top: 40px;
+        text-align: center;
+        padding: 20px 0;
+        color: #777;
+        font-size: 14px;
     }
 
     /* Responsive adjustments */
@@ -209,192 +286,207 @@
         .page-header {
             flex-direction: column;
             align-items: flex-start;
-            gap: 10px;
+            gap: 15px;
         }
 
         .inventory-controls {
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
         }
 
         .search-bar {
             width: 100%;
+        }
+
+        .filter-controls {
+            width: 100%;
+        }
+
+        .filter-button {
+            flex: 1;
+            justify-content: center;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Inventory Management</h1>
-    <button class="add-button">
-        <i class="fas fa-plus"></i>
-        <span>Add New Item</span>
-    </button>
-</div>
-
-<!-- Inventory Categories -->
-<div class="inventory-categories">
-    <div class="category-card">
-        <div class="category-icon">
-            <i class="fas fa-egg"></i>
-        </div>
-        <h3>Eggs</h3>
-        <p>{{ egg_count|default:"1,250" }} in stock</p>
+<div class="container">
+    <div class="page-header">
+        <h1>Inventory Management</h1>
+        <button class="add-button">
+            <i class="fas fa-plus"></i>
+            <span>Add New Item</span>
+        </button>
     </div>
 
-    <div class="category-card">
-        <div class="category-icon">
-            <i class="fas fa-drumstick-bite"></i>
-        </div>
-        <h3>Feed</h3>
-        <p>{{ feed_count|default:"5,000" }} kg in stock</p>
-    </div>
-
-    <div class="category-card">
-        <div class="category-icon">
-            <i class="fas fa-prescription-bottle-alt"></i>
-        </div>
-        <h3>Medications</h3>
-        <p>{{ medication_count|default:"18" }} items in stock</p>
-    </div>
-
-    <div class="category-card">
-        <div class="category-icon">
-            <i class="fas fa-tools"></i>
-        </div>
-        <h3>Equipment</h3>
-        <p>{{ equipment_count|default:"35" }} items in stock</p>
-    </div>
-</div>
-
-<!-- Inventory List -->
-<div class="inventory-section">
-    <h2>Inventory Items</h2>
-
-    <div class="inventory-controls">
-        <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search inventory...">
-        </div>
-        <div class="filter-controls">
-            <div class="filter-button">
-                <i class="fas fa-filter"></i>
-                <span>Filter</span>
-                <i class="fas fa-chevron-down"></i>
+    <!-- Inventory Categories -->
+    <div class="inventory-categories">
+        <div class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-egg"></i>
             </div>
-            <div class="filter-button">
-                <i class="fas fa-sort"></i>
-                <span>Sort</span>
-                <i class="fas fa-chevron-down"></i>
+            <h3>Eggs</h3>
+            <p>{{ egg_count|default:"1,250" }} in stock</p>
+        </div>
+
+        <div class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-drumstick-bite"></i>
             </div>
+            <h3>Feed</h3>
+            <p>{{ feed_count|default:"5,000" }} kg in stock</p>
+        </div>
+
+        <div class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-prescription-bottle-alt"></i>
+            </div>
+            <h3>Medications</h3>
+            <p>{{ medication_count|default:"18" }} items in stock</p>
+        </div>
+
+        <div class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h3>Equipment</h3>
+            <p>{{ equipment_count|default:"35" }} items in stock</p>
         </div>
     </div>
 
-    <div class="inventory-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
-                    <th>Unit</th>
-                    <th>Status</th>
-                    <th>Last Updated</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in inventory_items %}
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.unit }}</td>
-                    <td>
-                        <span class="status-badge status-{{ item.status|lower }}">
-                            {{ item.status }}
-                        </span>
-                    </td>
-                    <td>{{ item.last_updated|date:"Y-m-d H:i" }}</td>
-                    <td class="actions">
-                        <button class="action-btn" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn" title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-                {% empty %}
-                <!-- Default items when no data is available -->
-                <tr>
-                    <td>Layer Feed</td>
-                    <td>Feed</td>
-                    <td>2500</td>
-                    <td>kg</td>
-                    <td><span class="status-badge status-ok">OK</span></td>
-                    <td>2025-03-01 08:30</td>
-                    <td class="actions">
-                        <button class="action-btn" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn" title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Broiler Feed</td>
-                    <td>Feed</td>
-                    <td>1200</td>
-                    <td>kg</td>
-                    <td><span class="status-badge status-low">LOW</span></td>
-                    <td>2025-03-02 10:15</td>
-                    <td class="actions">
-                        <button class="action-btn" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn" title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vaccines</td>
-                    <td>Medications</td>
-                    <td>5</td>
-                    <td>boxes</td>
-                    <td><span class="status-badge status-critical">CRITICAL</span></td>
-                    <td>2025-02-28 15:45</td>
-                    <td class="actions">
-                        <button class="action-btn" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn" title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Egg Trays</td>
-                    <td>Equipment</td>
-                    <td>150</td>
-                    <td>pieces</td>
-                    <td><span class="status-badge status-ok">OK</span></td>
-                    <td>2025-03-02 09:00</td>
-                    <td class="actions">
-                        <button class="action-btn" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn" title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Inventory List -->
+    <div class="inventory-section">
+        <h2>Inventory Items</h2>
+
+        <div class="inventory-controls">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search inventory...">
+            </div>
+            <div class="filter-controls">
+                <div class="filter-button">
+                    <i class="fas fa-filter"></i>
+                    <span>Filter</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-button">
+                    <i class="fas fa-sort"></i>
+                    <span>Sort</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="inventory-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in inventory_items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td>
+                            <span class="status-badge status-{{ item.status|lower }}">
+                                {{ item.status }}
+                            </span>
+                        </td>
+                        <td>{{ item.last_updated|date:"Y-m-d H:i" }}</td>
+                        <td class="actions">
+                            <button class="action-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <!-- Default items when no data is available -->
+                    <tr>
+                        <td>Layer Feed</td>
+                        <td>Feed</td>
+                        <td>2,500</td>
+                        <td>kg</td>
+                        <td><span class="status-badge status-ok">OK</span></td>
+                        <td>2025-03-01 08:30</td>
+                        <td class="actions">
+                            <button class="action-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Broiler Feed</td>
+                        <td>Feed</td>
+                        <td>1,200</td>
+                        <td>kg</td>
+                        <td><span class="status-badge status-low">LOW</span></td>
+                        <td>2025-03-02 10:15</td>
+                        <td class="actions">
+                            <button class="action-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Vaccines</td>
+                        <td>Medications</td>
+                        <td>5</td>
+                        <td>boxes</td>
+                        <td><span class="status-badge status-critical">CRITICAL</span></td>
+                        <td>2025-02-28 15:45</td>
+                        <td class="actions">
+                            <button class="action-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Egg Trays</td>
+                        <td>Equipment</td>
+                        <td>150</td>
+                        <td>pieces</td>
+                        <td><span class="status-badge status-ok">OK</span></td>
+                        <td>2025-03-02 09:00</td>
+                        <td class="actions">
+                            <button class="action-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <p></p>
     </div>
 </div>
 {% endblock %}
