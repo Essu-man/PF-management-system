@@ -13,7 +13,14 @@ def dashboard(request):
     })
 
 def Inventory(request):
-    return render(request, 'Inventory.html')
+    context = {
+        'egg_count': 1250,
+        'feed_count': 5000,
+        'medication_count': 18,
+        'equipment_count': 35,
+        'inventory_items': InventoryItem.objects.all()
+    }
+    return render(request, 'inventory.html', context)
 
 def birds(request):
     return render(request, 'birds.html')
