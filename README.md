@@ -1,2 +1,2 @@
 # PF-management-system
-inventory system for poultry farmers
+inventory system for poultry farmers and 
